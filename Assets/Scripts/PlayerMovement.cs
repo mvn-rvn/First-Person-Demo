@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
         }
         GameObject.Find("Stamina").GetComponent<Text>().text = "<color=navy><b>" + stamina.ToString("#.00") + "</b></color>\n<color=#00000050>" + potential_stamina.ToString("#.00") + "</color>";
 
+        // for later reference: https://answers.unity.com/questions/1482829/get-y-rotation-between-two-vector3-pointsget-y-rot.html
 
         //looking
         if(!is_dead) {
