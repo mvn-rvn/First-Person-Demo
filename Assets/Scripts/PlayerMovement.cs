@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     float stamina = 2f;
     float potential_stamina = 3f;
     public float dash_fov = 5f;
+    GameObject grapple;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
         fov = Camera.main.fieldOfView;
         forward_dir = transform.forward;
         Cursor.lockState = CursorLockMode.Locked;
+        grapple = GameObject.Find("Grapple");
     }
 
     // Update is called once per frame
