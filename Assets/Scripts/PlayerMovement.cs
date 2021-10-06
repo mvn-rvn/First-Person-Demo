@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //dash checking
-        if(Input.GetButtonDown("Sprint") && !is_dead && stamina >= 1f) {
+        if(Input.GetButtonDown("Sprint") && !is_dead && stamina >= 1f && !is_dashing) {
             if(Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0) {
                 before_pos = transform.position;
                 is_dashing = true;
@@ -117,6 +117,7 @@ public class PlayerMovement : MonoBehaviour
             horizontal = Input.GetAxis("Horizontal") * speed;
             vertical = Input.GetAxis("Vertical") * speed;
         }
+        //Make player move during dash, set dash timer
         if(is_dashing && dash_duration < max_dash_duration) {
             horizontal = dash_horizontal * speed * dash_multiplier;
             vertical = dash_vertical * speed * dash_multiplier;
