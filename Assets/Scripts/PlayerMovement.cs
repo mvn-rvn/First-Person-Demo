@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     float strafe_speed = 20f;
     float stamina = 2f;
     float potential_stamina = 3f;
+    public float dash_fov = 5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -80,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
             Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             Camera.main.transform.eulerAngles = new Vector3(Mathf.Clamp(x_mouse, -90, 90), y_mouse, strafe);
             if(is_dashing && dash_vertical != 0 && dash_horizontal == 0) {
-                Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, fov - (5f * dash_vertical), Time.deltaTime * strafe_speed);
+                Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, fov - (dash_fov * dash_vertical), Time.deltaTime * strafe_speed);
                 //Camera.main.fieldOfView = fov - 5f * dash_vertical;
             } else {
                 Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, fov, Time.deltaTime * strafe_speed);
