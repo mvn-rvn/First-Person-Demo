@@ -79,12 +79,12 @@ public class PlayerMovement : MonoBehaviour
             transform.eulerAngles = new Vector3(0, y_mouse, 0);
             Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             Camera.main.transform.eulerAngles = new Vector3(Mathf.Clamp(x_mouse, -90, 90), y_mouse, strafe);
-            if(is_dashing && dash_vertical != 0 && forward_dir == Camera.main.transform.forward) {
-                //Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, fov - 5, Time.deltaTime * 60);
-                Camera.main.fieldOfView = fov - 3 * dash_vertical;
+            if(is_dashing && dash_vertical != 0 && dash_horizontal == 0) {
+                Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, fov - (5f * dash_vertical), Time.deltaTime * strafe_speed);
+                //Camera.main.fieldOfView = fov - 5f * dash_vertical;
             } else {
-                //Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, fov, Time.deltaTime * 15);
-                Camera.main.fieldOfView = fov;
+                Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, fov, Time.deltaTime * strafe_speed);
+                //Camera.main.fieldOfView = fov;
             }
         }
 
