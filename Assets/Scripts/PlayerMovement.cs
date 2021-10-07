@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     float potential_stamina = 3f;
     public float dash_fov = 5f;
     public float dash_recharge_rate = 1.25f;
+    GameObject dash_particles;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         fov = Camera.main.fieldOfView;
         forward_dir = transform.forward;
         Cursor.lockState = CursorLockMode.Locked;
+        dash_particles = GameObject.Find("Dash Particles");
     }
 
     // Update is called once per frame
