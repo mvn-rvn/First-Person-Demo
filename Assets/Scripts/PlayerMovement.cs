@@ -35,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
     float stamina = 2f;
     float potential_stamina = 3f;
     public float dash_fov = 5f;
-    GameObject grapple;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
         fov = Camera.main.fieldOfView;
         forward_dir = transform.forward;
         Cursor.lockState = CursorLockMode.Locked;
-        grapple = GameObject.Find("Grapple");
     }
 
     // Update is called once per frame
@@ -124,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
         if(is_dashing && dash_duration < max_dash_duration) {
             horizontal = dash_horizontal * speed * dash_multiplier;
             vertical = dash_vertical * speed * dash_multiplier;
-            max_strafe = 3f;
+            max_strafe = 3.5f;
             strafe_speed = 40f;
             dash_duration += Time.deltaTime;
         } else {
