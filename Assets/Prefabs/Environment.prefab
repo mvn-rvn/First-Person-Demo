@@ -5482,6 +5482,7 @@ MonoBehaviour:
   max_dash_duration: 0.2
   dash_multiplier: 3
   dash_fov: 3
+  dash_recharge_rate: 1.25
 --- !u!54 &1504610083665436550
 Rigidbody:
   m_ObjectHideFlags: 0

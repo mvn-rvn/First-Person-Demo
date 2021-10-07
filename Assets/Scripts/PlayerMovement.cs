@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     float stamina = 2f;
     float potential_stamina = 3f;
     public float dash_fov = 5f;
+    public float dash_recharge_rate = 1.25f;
     // Start is called before the first frame update
     void Start()
     {
@@ -65,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         if(potential_stamina < 2f) {
-            potential_stamina += Time.deltaTime * 1.25f;
+            potential_stamina += Time.deltaTime * dash_recharge_rate;
         } else if(potential_stamina > 2f) {
             potential_stamina = 2f;
         }
