@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -37,6 +38,9 @@ public class PlayerMovement : MonoBehaviour
     public float dash_fov = 5f;
     public float dash_recharge_rate = 1.25f;
     GameObject dash_particles;
+    PostProcessVolume fx;
+    Vignette vignette;
+    float vignette_intensity;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +54,12 @@ public class PlayerMovement : MonoBehaviour
         forward_dir = transform.forward;
         Cursor.lockState = CursorLockMode.Locked;
         dash_particles = GameObject.Find("Dash Particles");
+        dash_particles.GetComponent<ParticleSystem>().Clear();
+        dash_particles.GetComponent<ParticleSystem>().Stop();
+        fx = Camera.main.GetComponent<PostProcessVolume>();
+        vignette = fx.profile.GetSetting<Vignette>();
+        vignette_intensity = vignette.intensity.value;
+        vignette.intensity.value = 0;
     }
 
     // Update is called once per frame
@@ -64,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
                 dash_horizontal = Input.GetAxisRaw("Horizontal");
                 stamina -= 1f;
                 potential_stamina -= 1f;
+                dash_particles.GetComponent<ParticleSystem>().Play();
                 Invoke("DashExit", max_dash_duration);
             }
         }
@@ -76,19 +87,21 @@ public class PlayerMovement : MonoBehaviour
 
         // for later reference: https://answers.unity.com/questions/1482829/get-y-rotation-between-two-vector3-pointsget-y-rot.html
 
-        //looking
+        //camera looking and FOV
         if(!is_dead) {
             x_mouse -= Input.GetAxis("Mouse Y") * sensitivity;
             y_mouse += Input.GetAxis("Mouse X") * sensitivity;
             transform.eulerAngles = new Vector3(0, y_mouse, 0);
             Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             Camera.main.transform.eulerAngles = new Vector3(Mathf.Clamp(x_mouse, -90, 90), y_mouse, strafe);
-            if(is_dashing && dash_vertical != 0 && dash_horizontal == 0) {
-                Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, fov - (dash_fov * dash_vertical), Time.deltaTime * strafe_speed);
-                //Camera.main.fieldOfView = fov - 5f * dash_vertical;
+            if(is_dashing) {
+                if(dash_vertical != 0 && dash_horizontal == 0) {
+                    Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, fov - (dash_fov * dash_vertical), Time.deltaTime * strafe_speed);
+                }
+                vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, vignette_intensity, Time.deltaTime * strafe_speed);
             } else {
                 Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, fov, Time.deltaTime * strafe_speed);
-                //Camera.main.fieldOfView = fov;
+                vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, 0, Time.deltaTime * strafe_speed);
             }
         }
 
@@ -180,6 +193,7 @@ public class PlayerMovement : MonoBehaviour
     void DashExit() {
         after_pos = transform.position;
         velocity = (after_pos.y - before_pos.y) / max_dash_duration / dash_multiplier;
+        dash_particles.GetComponent<ParticleSystem>().Stop();
     }
 
     //obstacle detection
