@@ -135,18 +135,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1504610083026101078, guid: 5998b1b6392b5b54b813d04dbae2559c, type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1504610083026101079, guid: 5998b1b6392b5b54b813d04dbae2559c, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 60149163410064c4eb9bc846bbb94ccb, type: 2}
-    - target: {fileID: 1504610083245740364, guid: 5998b1b6392b5b54b813d04dbae2559c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.23
-      objectReference: {fileID: 0}
     - target: {fileID: 1504610083670592262, guid: 5998b1b6392b5b54b813d04dbae2559c, type: 3}
       propertyPath: m_Name
       value: Environment
