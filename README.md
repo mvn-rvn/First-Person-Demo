@@ -1,4 +1,4 @@
-# Brackeys-Build
+# First-Person-Demo
 A Unity project of some sorts, I guess.
 
 # What we have currently
