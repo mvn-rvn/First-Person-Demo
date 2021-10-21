@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     PostProcessVolume fx;
     Vignette vignette;
     float vignette_intensity;
+    bool grounded = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -125,6 +126,18 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        //ground checking, cause for some reason controller.isGrounded doesn't work with setting dash transform.forward
+        RaycastHit groundinfo;
+        grounded = Physics.SphereCast(transform.position, 0.4f, Vector3.down, out groundinfo, 0.69f);
+        if(grounded) {
+            controller.stepOffset = 0.3f;
+        } else {
+            controller.stepOffset = 0f;
+        }
+        if(grounded && groundinfo.transform.tag == "ground") {
+            //in case I need the code to specifically check if the raycast detects ground and not just detect anything
+        }
+
         //movement
         if(controller.isGrounded) {
             horizontal = Input.GetAxisRaw("Horizontal") * speed;
@@ -170,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
         } else {
             strafe = Mathf.Lerp(strafe, 0f, Time.deltaTime * 20);
         }
-        if(is_dashing && !controller.isGrounded && dash_horizontal == 0 && dash_vertical > 0) {
+        if(is_dashing && !grounded && dash_horizontal == 0 && dash_vertical > 0) {
             forward_dir = Camera.main.transform.forward;
         } else {
             forward_dir = transform.forward;
